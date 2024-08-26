@@ -26,7 +26,7 @@ color = graphics.Color(255, 255, 255)  # White color
 text_lines = ["Line 1", "Line 2", "Line 3"]
 
 # Calculate the x position (far right)
-x_position = options.cols - 1  # Adjust if necessary for padding
+x_position = 0  # Adjust if necessary for padding
 
 # Calculate the y positions to stack the text vertically
 line_height = 13
@@ -37,7 +37,7 @@ def draw_stacked_text():
     y_position = options.rows - (line_height * len(text_lines) + (len(text_lines) - 1) * padding)  # Calculate starting y position
     
     for line in text_lines:
-        graphics.DrawText(canvas, font, x_position - graphics.DrawTextWidth(font, line), y_position, color, line)
+        graphics.DrawText(canvas, font, x_position , y_position, color, line)
         y_position += line_height + padding  # Move down for the next line
 
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
@@ -45,7 +45,7 @@ def draw_stacked_text():
 try:
     while True:
         draw_stacked_text()  # Continuously draw text
-        time.sleep(1)  # Adjust delay if needed (e.g., 1 second delay)
+        time.sleep(5)  # Adjust delay if needed (e.g., 1 second delay)
 except KeyboardInterrupt:
     canvas.Clear()  # Clear the display when interrupted
     matrix.SwapOnVSync(canvas)
