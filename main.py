@@ -17,7 +17,7 @@ canvas = matrix.CreateFrameCanvas()
 
 # Load font (adjust path if needed)
 font = graphics.Font()
-font.LoadFont("rpi-rgb-led-matrix/fonts/4x6.bdf")  # Adjust path to your font file if necessary
+font.LoadFont("rpi-rgb-led-matrix/fonts/6x10.bdf")  # Adjust path to your font file if necessary
 
 # Set text color
 color = graphics.Color(255, 255, 255)  # White color
@@ -29,7 +29,7 @@ text_lines = ["Line 1", "Line 2", "Line 3"]
 x_position = 0  # Adjust if necessary for padding
 # Calculate the y positions to stack the text vertically
 line_height = 10
-padding = 2  # Space between lines
+padding = 0  # Space between lines
 
 def draw_stacked_text():
     canvas.Clear()  # Clear previous content
