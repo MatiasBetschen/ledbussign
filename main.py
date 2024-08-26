@@ -34,10 +34,10 @@ padding = 2  # Space between lines
 def draw_stacked_text():
     canvas.Clear()  # Clear previous content
     y_position=0
-    for line in text_lines:
-        graphics.DrawText(canvas, font, x_position , y_position, color, line)
-        y_position += line_height + padding  # Move down for the next line
-
+    
+    graphics.DrawText(canvas, font, 0 , 0-line_height, color, "Bus 31   5min")
+    graphics.DrawText(canvas, font,0, 0-2*line_height, color-padding, "Tram 20  8min")
+    graphics.DrawText(canvas, font, 0 , 0-3*line_height, color-2*padding, color, "Tram 2  10min")
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
 
 try:
