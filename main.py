@@ -22,19 +22,32 @@ font.LoadFont("rpi-rgb-led-matrix/fonts/7x13.bdf")  # Adjust path to your font f
 # Set text color
 color = graphics.Color(255, 255, 255)  # White color
 
-# Draw text on the canvas
-def draw_text():
+# Define text strings
+text_lines = ["Line 1", "Line 2", "Line 3"]
+
+# Calculate the x position (far right)
+x_position = options.cols - 1  # Adjust if necessary for padding
+
+# Calculate the y positions to stack the text vertically
+line_height = font.CharacterHeight()
+padding = 2  # Space between lines
+
+def draw_stacked_text():
     canvas.Clear()  # Clear previous content
-    graphics.DrawText(canvas, font, 10, 20, color, "Hello")  # Position (10, 20) is where text starts
+    y_position = options.rows - (line_height * len(text_lines) + (len(text_lines) - 1) * padding)  # Calculate starting y position
+    
+    for line in text_lines:
+        graphics.DrawText(canvas, font, x_position - graphics.DrawTextWidth(font, line), y_position, color, line)
+        y_position += line_height + padding  # Move down for the next line
+
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
 
 try:
     while True:
-        draw_text()  # Continuously draw text
+        draw_stacked_text()  # Continuously draw text
         time.sleep(1)  # Adjust delay if needed (e.g., 1 second delay)
 except KeyboardInterrupt:
     canvas.Clear()  # Clear the display when interrupted
     matrix.SwapOnVSync(canvas)
     print("Display cleared and script terminated.")
-
 
