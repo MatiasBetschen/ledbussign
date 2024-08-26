@@ -14,7 +14,7 @@ matrix = RGBMatrix(options=options)
 
 # Load font
 font = graphics.Font()
-font.LoadFont("/rpi-rgb-led-matrix/fonts/7x13.bdf")
+font.LoadFont("rpi-rgb-led-matrix/fonts/7x13.bdf")
 
 # Set color
 color = graphics.Color(255, 255, 0)  # Yellow
