@@ -29,7 +29,7 @@ text_lines = ["Line 1", "Line 2", "Line 3"]
 x_position = options.cols - 1  # Adjust if necessary for padding
 
 # Calculate the y positions to stack the text vertically
-line_height = font.CharacterHeight()
+line_height = 13
 padding = 2  # Space between lines
 
 def draw_stacked_text():
