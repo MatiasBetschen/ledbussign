@@ -6,7 +6,7 @@ options.rows = 32  # Number of rows (adjust to your matrix size)
 options.cols = 64  # Number of columns (adjust to your matrix size)
 options.chain_length = 1
 options.parallel = 1
-options.hardware_mapping = 'regular'  # Adjust based on your hardware setup
+options.hardware_mapping = 'adafruit-hat'  # Adjust based on your hardware setup
 
 # Initialize the matrix
 matrix = RGBMatrix(options=options)
