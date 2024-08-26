@@ -36,8 +36,8 @@ def draw_stacked_text():
     y_position=0
     
     graphics.DrawText(canvas, font, 0 , 0-line_height, color, "Bus 31   5min")
-    graphics.DrawText(canvas, font,0, 0-2*line_height, color-padding, "Tram 20  8min")
-    graphics.DrawText(canvas, font, 0 , 0-3*line_height, color-2*padding, color, "Tram 2  10min")
+    graphics.DrawText(canvas, font,0, 0-2*line_height-padding, color, "Tram 20  8min")
+    graphics.DrawText(canvas, font, 0 , 0-3*line_height-2*padding, color, "Tram 2  10min")
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
 
 try:
