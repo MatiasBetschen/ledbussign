@@ -1,13 +1,12 @@
-
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 
 # Configuration for the matrix
 options = RGBMatrixOptions()
-options.rows = 32  # Number of rows
-options.cols = 64  # Number of columns
+options.rows = 32  # Number of rows (adjust to your matrix size)
+options.cols = 64  # Number of columns (adjust to your matrix size)
 options.chain_length = 1
 options.parallel = 1
-options.hardware_mapping = 'regular'  # Adjust if using different hardware
+options.hardware_mapping = 'regular'  # Adjust based on your hardware setup
 
 # Initialize the matrix
 matrix = RGBMatrix(options=options)
@@ -15,24 +14,16 @@ matrix = RGBMatrix(options=options)
 # Create a drawing canvas
 canvas = matrix.CreateFrameCanvas()
 
-# Set color for the square (e.g., white)
-color = graphics.Color(255, 255, 255)  # RGB: White
+# Load font (adjust path if needed)
+font = graphics.Font()
+font.LoadFont("rpi-rgb-led-matrix/fonts/7x13.bdf")  # Change path to your font file if necessary
 
-# Define the square size
-square_size = 10
+# Set text color
+color = graphics.Color(255, 255, 255)  # White color
 
-# Calculate the center of the matrix
-center_x = options.cols // 2
-center_y = options.rows // 2
+# Draw text on the canvas
+graphics.DrawText(canvas, font, 10, 20, color, "Hello")  # Position (10, 20) is where text starts
 
-# Calculate the top-left corner of the square
-top_left_x = center_x - (square_size // 2)
-top_left_y = center_y - (square_size // 2)
-
-# Draw the square
-for x in range(top_left_x, top_left_x + square_size):
-    for y in range(top_left_y, top_left_y + square_size):
-        canvas.SetPixel(x, y, color.red, color.green, color.blue)
-
-# Update the matrix to display the square
+# Update the matrix to display the text
 matrix.SwapOnVSync(canvas)
+
