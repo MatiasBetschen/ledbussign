@@ -27,14 +27,13 @@ text_lines = ["Line 1", "Line 2", "Line 3"]
 
 # Calculate the x position (far right)
 x_position = 0  # Adjust if necessary for padding
-y_position = 0
 # Calculate the y positions to stack the text vertically
 line_height = 13
 padding = 2  # Space between lines
 
 def draw_stacked_text():
     canvas.Clear()  # Clear previous content
-    
+    y_position=0
     for line in text_lines:
         graphics.DrawText(canvas, font, x_position , y_position, color, line)
         y_position += line_height + padding  # Move down for the next line
