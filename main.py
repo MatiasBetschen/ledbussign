@@ -1,5 +1,8 @@
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 import time
+import requests
+import datetime
+
 
 # Configuration for the matrix
 options = RGBMatrixOptions()
@@ -31,19 +34,41 @@ x_position = 0  # Adjust if necessary for padding
 line_height = 10
 padding = 0  # Space between lines
 
-def draw_stacked_text():
+def draw_stacked_text(array):
     canvas.Clear()  # Clear previous content
     y_position=0
     
-    graphics.DrawText(canvas, font, 0 , 0+line_height, color, "Bus 31 5min")
-    graphics.DrawText(canvas, font,0, 0+2*line_height+padding, color, "Tram 20 8min")
-    graphics.DrawText(canvas, font, 0 , 0+3*line_height+2*padding, color, "Tram 2 10min")
+    graphics.DrawText(canvas, font, 0 , 0+line_height, color, array[1])
+    graphics.DrawText(canvas, font,0, 0+2*line_height+padding, color, array[2])
+    graphics.DrawText(canvas, font, 0 , 0+3*line_height+2*padding, color, array[3])
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
+
+def gettrainsit():
+    url = "http://transport.opendata.ch/v1/stationboard"
+    params = {'station': 'Zürich, Farbhof', 'limit': '10'}
+    response = requests.get(url, params=params)
+
+    if response.status_code == 200:
+        data = response.json()["stationboard"]
+        # Process the data as needed
+        res=[]
+        for val in data:
+            departure_time = datetime.datetime.strptime(val["stop"]["departure"], "%Y-%m-%dT%H:%M:%S%z")
+            current_time = datetime.datetime.now(departure_time.tzinfo)
+            time_until_departure = departure_time - current_time
+            deltaT = str(int(time_until_departure.total_seconds() // 60))
+            #print(val["to"]+" "+time +" "+val["category"]+" "+val["number"]+" "+val["operator"]+" "+str(val["stop"]["prognosis"]))
+            print(val["category"]+val["number"]+" "+deltaT)
+            res.append(val["category"]+val["number"]+" "+deltaT)
+        return res
+    else:
+        print("Error:", response.status_code)
 
 try:
     while True:
-        draw_stacked_text()  # Continuously draw text
-        time.sleep(5)  # Adjust delay if needed (e.g., 1 second delay)
+        data=gettrainsit()
+        draw_stacked_text(data)  # Continuously draw text
+        time.sleep(60)  # Adjust delay if needed (e.g., 1 second delay)
 except KeyboardInterrupt:
     canvas.Clear()  # Clear the display when interrupted
     matrix.SwapOnVSync(canvas)
