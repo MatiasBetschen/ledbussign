@@ -57,13 +57,13 @@ def gettrainsit():
             departure_time = datetime.datetime.strptime(val["stop"]["departure"], "%Y-%m-%dT%H:%M:%S%z")
             current_time = datetime.datetime.now(departure_time.tzinfo)
             time_until_departure = departure_time - current_time
-            deltaT = str(int(time_until_departure.total_seconds() / 60))
+            deltaT = int(time_until_departure.total_seconds() / 60)
             #print(val["to"]+" "+time +" "+val["category"]+" "+val["number"]+" "+val["operator"]+" "+str(val["stop"]["prognosis"]))
             if deltaT>=0:
                 if val['to'] in ["Zurich Tiefenbrunnen, Bahnhof","Zürich, Kienastenwies","Zürich Altstetten, Bahnhof"]:
                     if deltaT==0:
                         res.append(val["category"]+val["number"]+" o-oD")
-                    res.append(val["category"]+val["number"]+" "+deltaT+"'")
+                    res.append(val["category"]+val["number"]+" "+str(deltaT)+"'")
         return res
     else:
         print("Error:", response.status_code)
