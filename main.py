@@ -50,7 +50,6 @@ def gettrainsit():
 
     if response.status_code == 200:
         data = response.json()["stationboard"]
-        data=data[:3]
         # Process the data as needed
         res=[]
         for val in data:
@@ -63,8 +62,9 @@ def gettrainsit():
                 if val['to'] in ["Zurich Tiefenbrunnen, Bahnhof","Zürich, Kienastenwies","Zürich Altstetten, Bahnhof"]:
                     if deltaT==0:
                         res.append(val["category"]+val["number"]+" o-oD")
-                    res.append(val["category"]+val["number"]+" "+str(deltaT)+"'")
-        return res
+                    else:
+                        res.append(val["category"]+val["number"]+" "+str(deltaT)+"'")
+        return res[:3]
     else:
         print("Error:", response.status_code)
 
