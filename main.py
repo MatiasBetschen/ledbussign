@@ -32,7 +32,7 @@ def getcolor(string):
         'B35': graphics.Color(0, 255, 0)
     }
     first_three_chars = string[:3].lower()
-    return color_map.get(first_three_chars, 'Unknown')
+    return color_map.get(first_three_chars, graphics.Color(255, 255, 255))
 
 
 def draw_stacked_text(array, array2):
