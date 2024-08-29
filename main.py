@@ -25,20 +25,21 @@ font.LoadFont("rpi-rgb-led-matrix/fonts/6x10.bdf")  # Adjust path to your font f
 # Set text color
 color = graphics.Color(255, 255, 255)  # White color
 
-# Define text strings
-text_lines = ["Line 1", "Line 2", "Line 3"]
-
 # Calculate the x position (far right)
 x_position = 0  # Adjust if necessary for padding
 # Calculate the y positions to stack the text vertically
 line_height = 7
 padding = 0  # Space between lines
 
-def draw_stacked_text(array):
+def draw_stacked_text(array, array2):
     canvas.Clear()  # Clear previous content
     y_position=0
     for i in range (len(array)):
-         graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height, color, array[i])
+        if i==0:
+            graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height, color, array[i])
+        else:
+            graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height+1, color, array[i])
+    graphics.DrawText(canvas, font, 0 , 32, color, array2)
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
 
 def gettrainsit():
@@ -65,11 +66,15 @@ def gettrainsit():
         return res[:3]
     else:
         print("Error:", response.status_code)
+def getspace():
 
+
+    return "Falcon 9"
 try:
     while True:
         data=gettrainsit()
-        draw_stacked_text(data)  # Continuously draw text
+        data2=getspace()
+        draw_stacked_text(data,data2)  # Continuously draw text
         time.sleep(60)  # Adjust delay if needed (e.g., 1 second delay)
 except KeyboardInterrupt:
     canvas.Clear()  # Clear the display when interrupted
