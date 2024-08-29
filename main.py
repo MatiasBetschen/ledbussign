@@ -31,7 +31,7 @@ text_lines = ["Line 1", "Line 2", "Line 3"]
 # Calculate the x position (far right)
 x_position = 0  # Adjust if necessary for padding
 # Calculate the y positions to stack the text vertically
-line_height = 10
+line_height = 7
 padding = 0  # Space between lines
 
 def draw_stacked_text(array):
