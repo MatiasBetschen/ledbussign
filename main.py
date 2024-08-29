@@ -39,7 +39,7 @@ def draw_stacked_text(array):
     y_position=0
     
     graphics.DrawText(canvas, font, 0 , 0+line_height, color, array[0])
-    graphics.DrawText(canvas, font,0, 0+2*line_height+padding, color, array[0])
+    graphics.DrawText(canvas, font,0, 0+2*line_height+padding, color, array[1])
     graphics.DrawText(canvas, font, 0 , 0+3*line_height+2*padding, color, array[2])
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
 
@@ -72,7 +72,7 @@ try:
     while True:
         data=gettrainsit()
         draw_stacked_text(data)  # Continuously draw text
-        time.sleep(120)  # Adjust delay if needed (e.g., 1 second delay)
+        time.sleep(60)  # Adjust delay if needed (e.g., 1 second delay)
 except KeyboardInterrupt:
     canvas.Clear()  # Clear the display when interrupted
     matrix.SwapOnVSync(canvas)
