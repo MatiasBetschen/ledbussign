@@ -80,7 +80,7 @@ def getspace():
     else:
         print("Error:", response.status_code)
 
-    return data[:1]["rocket"]
+    return data[0]["name"]
 try:
     while True:
         data=gettrainsit()
