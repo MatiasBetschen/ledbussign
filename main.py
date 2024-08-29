@@ -37,12 +37,8 @@ padding = 0  # Space between lines
 def draw_stacked_text(array):
     canvas.Clear()  # Clear previous content
     y_position=0
-    if len(array)<3:
-        graphics.DrawText(canvas, font, 0 , 0+line_height, color, "not 3")
-    else:
-        graphics.DrawText(canvas, font, 0 , 0+line_height, color, array[0])
-        graphics.DrawText(canvas, font,0, 0+2*line_height+padding, color, array[1])
-        graphics.DrawText(canvas, font, 0 , 0+3*line_height+2*padding, color, array[2])
+    for i in range (len(array)):
+         graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height, color, array[i])
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
 
 def gettrainsit():
