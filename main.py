@@ -60,6 +60,15 @@ def draw_stacked_text(array, array2):
     #graphics.DrawText(canvas, font, 0 , 32, color, array2)
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
 
+def time_until(target_time_str):
+    target_datetime = datetime.datetime.fromisoformat(target_time_str.replace('Z', '+00:00'))
+    now = datetime.datetime.now(datetime.timezone.utc)
+    time_diff = target_datetime - now
+    hours, remainder = divmod(time_diff.total_seconds(), 3600)
+    minutes, _ = divmod(remainder, 60)
+    if time_diff.total_seconds() < 0:
+        hours, minutes = 0, 0
+    return int(hours), int(minutes)
 def gettrainsit():
     url = "http://transport.opendata.ch/v1/stationboard"
     params = {'station': 'Zürich, Farbhof', 'limit': '10'}
@@ -98,8 +107,9 @@ def getspace():
         data = response.json()[ "results"]
     else:
         print("Error:", response.status_code)
-
-    return data[0]["name"]
+    time=time_until(data[0]["net"])
+    spaceres=data[0]["name"]+" "+str(time[0])+":"+str(time[1])
+    return spaceres
 try:
     while True:
         data=gettrainsit()
