@@ -36,15 +36,16 @@ def getcolor(string):
 
 def scroll_text(array,text,delay=0.05):
     offscreen_canvas = matrix.CreateFrameCanvas()
-    for i in range (len(array)):
-        color=getcolor(array[i])
-        graphics.DrawText(offscreen_canvas, font, 0 , 0+(i+1)*line_height+i, color, array[i])
-    color=graphics.Color(255, 255, 255)
+    
     pos = offscreen_canvas.width
+    color=graphics.Color(255, 255, 255)
 
     while True:
         offscreen_canvas.Clear()
         length = graphics.DrawText(offscreen_canvas, font, pos,32, graphics.Color(255, 255, 255), text)
+        for i in range (len(array)):
+            color=getcolor(array[i])
+            graphics.DrawText(offscreen_canvas, font, 0 , 0+(i+1)*line_height+i, color, array[i])
         
         pos -= 1
         if pos + length < 0:
