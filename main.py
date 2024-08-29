@@ -114,8 +114,7 @@ def getspace():
             if res["weather_concerns"]!=None:
                     output+=res["weather_concerns"]
             return output 
-        else:
-            return "No launches"
+    return "No launches"
 try:
     while True:
         data=gettrainsit()
