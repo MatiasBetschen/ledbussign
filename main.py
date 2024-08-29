@@ -38,7 +38,7 @@ def scroll_text(array,text,delay=0.05):
     offscreen_canvas = matrix.CreateFrameCanvas()
     for i in range (len(array)):
         color=getcolor(array[i])
-        graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height+i, color, array[i])
+        graphics.DrawText(offscreen_canvas, font, 0 , 0+(i+1)*line_height+i, color, array[i])
     color=graphics.Color(255, 255, 255)
     pos = offscreen_canvas.width
 
@@ -86,7 +86,7 @@ def gettrainsit():
 def getspace():
     url='https://lldev.thespacedevs.com/2.2.0/launch/'
     url2='https://lldev.thespacedevs.com/2.2.0/launch/upcoming/'
-    params = {}
+    params = {}  #add params
     response = requests.get(url2)
 
     if response.status_code == 200:
