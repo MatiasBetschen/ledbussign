@@ -22,23 +22,24 @@ canvas = matrix.CreateFrameCanvas()
 font = graphics.Font()
 font.LoadFont("rpi-rgb-led-matrix/fonts/6x10.bdf")  # Adjust path to your font file if necessary
 
-# Set text color
-color = graphics.Color(255, 255, 255)  # White color
-
-# Calculate the x position (far right)
-x_position = 0  # Adjust if necessary for padding
 # Calculate the y positions to stack the text vertically
 line_height = 7
 padding = 0  # Space between lines
+def getcolor(string):
+    color_map = {
+        'B31': graphics.Color(0, 0, 255),
+        'T20': graphics.Color(255, 0, 0),
+        'B35': graphics.Color(0, 255, 0)
+    }
+    first_three_chars = string[:3].lower()
+    return color_map.get(first_three_chars, 'Unknown')
+
 
 def draw_stacked_text(array, array2):
     canvas.Clear()  # Clear previous content
-    y_position=0
     for i in range (len(array)):
-        if i==0:
-            graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height, color, array[i])
-        else:
-            graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height+1, color, array[i])
+        color=getcolor(array[i])
+        graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height+i, color, array[i])
     graphics.DrawText(canvas, font, 0 , 32, color, array2)
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
 
