@@ -110,7 +110,9 @@ def getspace():
     for res in data:
         time=time_until(res["net"])
         if time[0]>0 and time[1]>0:
-            output=res["name"]+" | "+str(time[0])+":"+str(time[1])+" |  "+ res["weather_concerns"]
+            output=res["name"]+" | "+str(time[0])+":"+str(time[1])+" |  "
+            if res["weather_concerns"]!=None:
+                    output+=res["weather_concerns"]
             return output 
         else:
             return "No launches"
