@@ -34,9 +34,12 @@ def getcolor(string):
     first_three_chars = string[:3]
     return color_map.get(first_three_chars, graphics.Color(255, 255, 255))
 
-def scroll_text(text,delay=0.05):
+def scroll_text(array,text,delay=0.05):
     offscreen_canvas = matrix.CreateFrameCanvas()
-
+    for i in range (len(array)):
+        color=getcolor(array[i])
+        graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height+i, color, array[i])
+    color=graphics.Color(255, 255, 255)
     pos = offscreen_canvas.width
 
     while True:
@@ -52,10 +55,7 @@ def scroll_text(text,delay=0.05):
 
 def draw_stacked_text(array, array2):
     canvas.Clear()  # Clear previous content
-    for i in range (len(array)):
-        color=getcolor(array[i])
-        graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height+i, color, array[i])
-    color=graphics.Color(255, 255, 255)
+    
     #graphics.DrawText(canvas, font, 0 , 32, color, array2)
     matrix.SwapOnVSync(canvas)  # Update the matrix to display the text
 
@@ -91,8 +91,6 @@ def getspace():
 
     if response.status_code == 200:
         data = response.json()[ "results"]
-        for val in data:
-            print(val["rocket"]['configuration']['name'], val['name'])
     else:
         print("Error:", response.status_code)
 
@@ -101,8 +99,8 @@ try:
     while True:
         data=gettrainsit()
         data2=getspace()
-        scroll_text(data2,delay=0.05)
-        draw_stacked_text(data,data2)  # Continuously draw text
+        scroll_text(data,data2,delay=0.05)
+        #draw_stacked_text(data,data2)  # Continuously draw text
         time.sleep(60)  # Adjust delay if needed (e.g., 1 second delay)
 except KeyboardInterrupt:
     canvas.Clear()  # Clear the display when interrupted
