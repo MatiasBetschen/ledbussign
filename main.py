@@ -31,7 +31,7 @@ def getcolor(string):
         'T20': graphics.Color(255, 0, 0),
         'B35': graphics.Color(0, 255, 0)
     }
-    first_three_chars = string[:3].lower()
+    first_three_chars = string[:3]
     return color_map.get(first_three_chars, graphics.Color(255, 255, 255))
 
 
@@ -68,9 +68,19 @@ def gettrainsit():
     else:
         print("Error:", response.status_code)
 def getspace():
+    url='https://lldev.thespacedevs.com/2.2.0/launch/'
+    url2='https://lldev.thespacedevs.com/2.2.0/launch/upcoming/'
+    params = {}
+    response = requests.get(url2)
 
+    if response.status_code == 200:
+        data = response.json()[ "results"]
+        for val in data:
+            print(val["rocket"]['configuration']['name'], val['name'])
+    else:
+        print("Error:", response.status_code)
 
-    return "Falcon 9"
+    return data[:1]["rocket"]
 try:
     while True:
         data=gettrainsit()
