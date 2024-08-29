@@ -70,23 +70,27 @@ def gettrainsit():
         # Process the data as needed
         res=[]
         for val in data:
-            departure_time = datetime.datetime.strptime(val["stop"]["departure"], "%Y-%m-%dT%H:%M:%S%z")
+            if val['stop']['prognosis']['departure']!=None:
+                departure_time = datetime.datetime.strptime(val['stop']['prognosis']['departure'], "%Y-%m-%dT%H:%M:%S%z")
+            else:
+                departure_time = datetime.datetime.strptime(val['stop']['departure'], "%Y-%m-%dT%H:%M:%S%z")
             current_time = datetime.datetime.now(departure_time.tzinfo)
             time_until_departure = departure_time - current_time
             deltaT = int(time_until_departure.total_seconds() / 60)
+            deltaTs=int(time_until_departure.total_seconds() % 60)
             #print(val["to"]+" "+time +" "+val["category"]+" "+val["number"]+" "+val["operator"]+" "+str(val["stop"]["prognosis"]))
             if deltaT>=0:
                 if val['to'] in ["Zurich Tiefenbrunnen, Bahnhof","Zürich, Kienastenwies","Zürich Altstetten, Bahnhof"]:
                     if deltaT==0:
                         res.append(val["category"]+val["number"]+" o-oD")
                     else:
-                        res.append(val["category"]+val["number"]+" "+str(deltaT)+"'")
+                        res.append(val["category"]+val["number"]+" "+str(deltaT)+"'"+str(deltaTs))
         return res[:3]
     else:
         print("Error:", response.status_code)
 def getspace():
     url='https://lldev.thespacedevs.com/2.2.0/launch/'
-    url2='https://lldev.thespacedevs.com/2.2.0/launch/upcoming/'
+    url2='https://ll.thespacedevs.com/2.2.0/launch/upcoming/'
     params = {}  #add params
     response = requests.get(url2)
 
