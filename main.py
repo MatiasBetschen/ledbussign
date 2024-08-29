@@ -108,9 +108,12 @@ def getspace():
     else:
         print("Error:", response.status_code)
     for res in data:
-        time=time_until(data[0]["net"])
+        time=time_until(res["net"])
         if time[0]>0 and time[1]>0:
-            return res["name"]+" | "+str(time[0])+":"+str(time[1])+" |  "+ res["weather_concerns"]
+            output=res["name"]+" | "+str(time[0])+":"+str(time[1])+" |  "+ res["weather_concerns"]
+            return output 
+        else:
+            return "No launches"
 try:
     while True:
         data=gettrainsit()
