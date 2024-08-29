@@ -107,9 +107,10 @@ def getspace():
         data = response.json()[ "results"]
     else:
         print("Error:", response.status_code)
-    time=time_until(data[0]["net"])
-    spaceres=data[0]["name"]+" "+str(time[0])+":"+str(time[1])
-    return spaceres
+    for res in data:
+        time=time_until(data[0]["net"])
+        if time[0]>0 and time[1]>0:
+            return res["name"]+" | "+str(time[0])+":"+str(time[1])+" |  "+ res["weather_concerns"]
 try:
     while True:
         data=gettrainsit()
