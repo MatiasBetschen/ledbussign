@@ -20,8 +20,10 @@ canvas = matrix.CreateFrameCanvas()
 
 # Load font (adjust path if needed)
 font = graphics.Font()
-font.LoadFont("rpi-rgb-led-matrix/fonts/6x10.bdf")  # Adjust path to your font file if necessary
-
+try:
+    font.LoadFont("rpi-rgb-led-matrix/fonts/6x10.bdf")  # Adjust path to your font file if necessary
+except:
+    font.LoadFont("ledbussign/rpi-rgb-led-matrix/fonts/6x10.bdf")
 # Calculate the y positions to stack the text vertically
 line_height = 7
 padding = 0  # Space between lines
