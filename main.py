@@ -97,7 +97,7 @@ def getspace():
     return "No launches"
 
 
-def update():
+def update(canvas):
     scroll_delay=0.05
     pos = canvas.width
     color=graphics.Color(255, 255, 255)
@@ -144,6 +144,6 @@ def update():
             print("Display cleared and script terminated.")
 
 
-update()
+update(canvas)
 
 
