@@ -33,7 +33,22 @@ def getcolor(string):
     }
     first_three_chars = string[:3]
     return color_map.get(first_three_chars, graphics.Color(255, 255, 255))
-
+def draw_bus(x,y,canvas):
+    #draws a bus icon given the lower left corner
+    rel_coor=[
+    [[0],[1],[1],[1],[0]]
+    [[1],[0],[0],[0],[1]],
+    [[1],[0],[0],[0],[1]],
+    [[1],[1],[1],[1],[1]],
+    [[1],[0],[1],[0],[1]],
+    [[1],[0],[1],[0],[1]],
+    [[1],[1],[1],[1],[1]]
+    ]
+    for py in range(rel_coor):
+        for px in range(rel_coor[py]):
+            if rel_coor[py,px]:
+                canvas.SetPixel(x+px+1, y+py+1-7, 255, 255, 255)
+    return
 def draw_stacked_text(array, array2):
     canvas.Clear()  # Clear previous content
     
@@ -71,9 +86,10 @@ def gettrainsit():
             if deltaT>=0:
                 if val['to'] in ["Zurich Tiefenbrunnen, Bahnhof","Zürich, Kienastenwies","Zürich Altstetten, Bahnhof"]:
                     if deltaT==0:
-                        res.append(val["category"]+val["number"]+" o-oD")
+                        res.append(val["category"]+val["number"]+"  ")
                     else:
-                        res.append(val["category"]+val["number"]+" "+str(deltaT)+"'"+str(deltaTs))
+                        res.append(val["category"]+val["number"]+"  ")
+                       # res.append(val["category"]+val["number"]+" "+str(deltaT)+"'"+str(deltaTs))
         return res[:3]
     else:
         print("Error:", response.status_code)
@@ -103,7 +119,7 @@ def update(canvas):
     color=graphics.Color(255, 255, 255)
 
     transit_update_interval=60
-    space_update_interval=120
+    space_update_interval=3600
 
     transit_timer=0
     space_timer=0
@@ -131,7 +147,8 @@ def update(canvas):
             for i in range (len(transit_array)):
                 color=getcolor(transit_array[i])
                 graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height+i, color, transit_array[i])
-            
+                if transit_array[i].endswith(" "):
+                    draw_bus(25, 0+(i+1)*line_height+i,canvas)
             pos -= 1
             if pos + length < 0:
                 pos = canvas.width
