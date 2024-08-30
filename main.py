@@ -36,16 +36,16 @@ def getcolor(string):
 def draw_bus(x,y,canvas):
     #draws a bus icon given the lower left corner
     rel_coor=[
-    [[0],[1],[1],[1],[0]]
-    [[1],[0],[0],[0],[1]],
-    [[1],[0],[0],[0],[1]],
-    [[1],[1],[1],[1],[1]],
-    [[1],[0],[1],[0],[1]],
-    [[1],[0],[1],[0],[1]],
-    [[1],[1],[1],[1],[1]]
+    [0,1,1,1,0],
+    [1,0,0,0,1],
+    [1,0,0,0,1],
+    [1,1,1,1,1],
+    [1,0,1,0,1],
+    [1,0,1,0,1],
+    [1,1,1,1,1]
     ]
-    for py in range(rel_coor):
-        for px in range(rel_coor[py]):
+    for py in range(len(rel_coor)):
+        for px in range(len(rel_coor[py])):
             if rel_coor[py,px]:
                 canvas.SetPixel(x+px+1, y+py+1-7, 255, 255, 255)
     return
