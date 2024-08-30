@@ -160,7 +160,11 @@ def update(canvas):
             matrix.SwapOnVSync(canvas)
             print("Display cleared and script terminated.")
 
-
-update(canvas)
+try:
+    update(canvas)
+except KeyboardInterrupt:
+    canvas.Clear()  # Clear the display when interrupted
+    matrix.SwapOnVSync(canvas)
+    print("Display cleared and script terminated.")
 
 
