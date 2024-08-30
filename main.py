@@ -66,7 +66,7 @@ def time_until(target_time_str):
     return int(hours), int(minutes)
 def gettrainsit():
     url = "http://transport.opendata.ch/v1/stationboard"
-    params = {'station': 'Zürich, Farbhof', 'limit': '10'}
+    params = {'station': 'Zürich, Farbhof', 'limit': '20'}
     response = requests.get(url, params=params)
 
     if response.status_code == 200:
@@ -125,7 +125,7 @@ def update(canvas):
 
     transit_array=gettrainsit()
     space_array=getspace()
-
+     #add resync and lower pull rate
     while True:
         try:
             #update any data
