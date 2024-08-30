@@ -34,26 +34,6 @@ def getcolor(string):
     first_three_chars = string[:3]
     return color_map.get(first_three_chars, graphics.Color(255, 255, 255))
 
-def scroll_text(array,text,delay=0.05):
-    offscreen_canvas = matrix.CreateFrameCanvas()
-    
-    pos = offscreen_canvas.width
-    color=graphics.Color(255, 255, 255)
-
-    while True:
-        offscreen_canvas.Clear()
-        length = graphics.DrawText(offscreen_canvas, font, pos,32, graphics.Color(255, 255, 255), text)
-        for i in range (len(array)):
-            color=getcolor(array[i])
-            graphics.DrawText(offscreen_canvas, font, 0 , 0+(i+1)*line_height+i, color, array[i])
-        
-        pos -= 1
-        if pos + length < 0:
-            pos = offscreen_canvas.width
-
-        time.sleep(delay)
-        offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
-
 def draw_stacked_text(array, array2):
     canvas.Clear()  # Clear previous content
     
@@ -115,15 +95,55 @@ def getspace():
                     output+=res["weather_concerns"]
             return output 
     return "No launches"
-try:
+
+
+def update():
+    scroll_delay=0.05
+    pos = canvas.width
+    color=graphics.Color(255, 255, 255)
+
+    transit_update_interval=60
+    space_update_interval=120
+
+    transit_timer=0
+    space_timer=0
+
+    transit_array=gettrainsit()
+    space_array=getspace()
+
     while True:
-        data=gettrainsit()
-        data2=getspace()
-        scroll_text(data,data2,delay=0.05)
-        #draw_stacked_text(data,data2)  # Continuously draw text
-        time.sleep(60)  # Adjust delay if needed (e.g., 1 second delay)
-except KeyboardInterrupt:
-    canvas.Clear()  # Clear the display when interrupted
-    matrix.SwapOnVSync(canvas)
-    print("Display cleared and script terminated.")
+        try:
+            #update any data
+            if transit_timer>=transit_update_interval:
+                transit_array=gettrainsit()
+                print("update transit")
+                transit_timer=0
+            if space_timer>=space_update_interval:
+                space_array=getspace()
+                print("update space")
+                space_timer=0
+
+            transit_timer+=scroll_delay
+            space_timer+=scroll_delay
+            
+            canvas.Clear()
+            length = graphics.DrawText(canvas, font, pos,32, graphics.Color(255, 255, 255), space_array)
+            for i in range (len(transit_array)):
+                color=getcolor(transit_array[i])
+                graphics.DrawText(canvas, font, 0 , 0+(i+1)*line_height+i, color, transit_array[i])
+            
+            pos -= 1
+            if pos + length < 0:
+                pos = canvas.width
+
+            time.sleep(scroll_delay)
+            canvas = matrix.SwapOnVSync(canvas)
+        except KeyboardInterrupt:
+            canvas.Clear()  # Clear the display when interrupted
+            matrix.SwapOnVSync(canvas)
+            print("Display cleared and script terminated.")
+
+
+update()
+
 
