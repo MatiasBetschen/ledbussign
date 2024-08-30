@@ -158,6 +158,7 @@ def update(canvas):
             canvas.Clear()  # Clear the display when interrupted
             matrix.SwapOnVSync(canvas)
             print("Display cleared and script terminated.")
+            break
 
 try:
     update(canvas)
