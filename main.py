@@ -2,6 +2,8 @@ from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 import time
 import requests
 import datetime
+import os
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 # Configuration for the matrix
@@ -21,7 +23,8 @@ canvas = matrix.CreateFrameCanvas()
 # Load font (adjust path if needed)
 font = graphics.Font()
 try:
-    font.LoadFont("rpi-rgb-led-matrix/fonts/6x10.bdf")  # Adjust path to your font file if necessary
+    font_path = os.path.join(script_dir, 'rpi-rgb-led-matrix/fonts/6x10.bdf')
+    font.LoadFont(font_path)  # Adjust path to your font file if necessary
 except:
     font.LoadFont("/ledbussign/rpi-rgb-led-matrix/fonts/6x10.bdf")
 # Calculate the y positions to stack the text vertically
