@@ -11,7 +11,7 @@ options.cols = 64  # Number of columns (adjust to your matrix size)
 options.chain_length = 1
 options.parallel = 1
 options.hardware_mapping = 'adafruit-hat'  # Set to 'adafruit-hat' for Adafruit HAT
-
+options.brightness = 50 
 # Initialize the matrix
 matrix = RGBMatrix(options=options)
 
@@ -36,18 +36,18 @@ def getcolor(string):
 def draw_bus(x,y,canvas):
     #draws a bus icon given the lower left corner
     rel_coor=[
-    [0,1,1,1,0],
-    [1,0,0,0,1],
-    [1,0,0,0,1],
-    [1,1,1,1,1],
-    [1,0,1,0,1],
-    [1,0,1,0,1],
-    [1,1,1,1,1]
+    [0,1,1,1,0,1,1,1,1,0],
+    [0,0,1,1,1,1,0,0,0,1],
+    [0,1,1,1,1,1,0,0,0,1],
+    [1,1,1,1,1,1,1,1,1,1],
+    [0,1,1,1,1,0,0,0,0,1],
+    [0,0,1,1,1,0,1,1,0,1],
+    [1,1,1,1,1,0,1,1,0,1]
     ]
     for py in range(len(rel_coor)):
         for px in range(len(rel_coor[py])):
             if rel_coor[py][px]:
-                canvas.SetPixel(x+px+1, y+py+1-7, 255, 255, 255)
+                canvas.SetPixel(x+px, y+py-7, 255, 255, 255)
     return
 def draw_stacked_text(array, array2):
     canvas.Clear()  # Clear previous content
@@ -88,8 +88,7 @@ def gettrainsit():
                     if deltaT==0:
                         res.append(val["category"]+val["number"]+"  ")
                     else:
-                        res.append(val["category"]+val["number"]+"  ")
-                       # res.append(val["category"]+val["number"]+" "+str(deltaT)+"'"+str(deltaTs))
+                        res.append(val["category"]+val["number"]+" "+str(deltaT)+"'"+str(deltaTs))
         return res[:3]
     else:
         print("Error:", response.status_code)
@@ -132,11 +131,11 @@ def update(canvas):
             #update any data
             if transit_timer>=transit_update_interval:
                 transit_array=gettrainsit()
-                print("update transit")
+                #print("update transit")
                 transit_timer=0
             if space_timer>=space_update_interval:
                 space_array=getspace()
-                print("update space")
+                #print("update space")
                 space_timer=0
 
             transit_timer+=scroll_delay
