@@ -2,8 +2,15 @@ from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 import time
 import requests
 import datetime
+import os
 
-
+def get_file_path():
+    # Get the directory where the script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    return   os.path.join(script_dir, "rpi-rgb-led-matrix", "fonts", "6x10.bdf")
+    
+ 
 # Configuration for the matrix
 options = RGBMatrixOptions()
 options.rows = 32  # Number of rows (adjust to your matrix size)
@@ -21,7 +28,7 @@ canvas = matrix.CreateFrameCanvas()
 # Load font (adjust path if needed)
 font = graphics.Font()
 try:
-    font.LoadFont("rpi-rgb-led-matrix/fonts/6x10.bdf")  # Adjust path to your font file if necessary
+    font.LoadFont(get_file_path())
 except:
     font.LoadFont("/rpi-rgb-led-matrix/fonts/6x10.bdf")
 # Calculate the y positions to stack the text vertically
