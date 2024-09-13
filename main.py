@@ -8,7 +8,7 @@ def get_file_path():
     # Get the directory where the script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
-    return   os.path.join(script_dir, "rpi-rgb-led-matrix", "fonts", "6x10.bdf")
+    return  os.path.join(script_dir, "rpi-rgb-led-matrix", "fonts", "6x10.bdf")
     
  
 # Configuration for the matrix
@@ -30,7 +30,7 @@ font = graphics.Font()
 try:
     font.LoadFont(get_file_path())
 except:
-    font.LoadFont("/rpi-rgb-led-matrix/fonts/6x10.bdf")
+    font.LoadFont("rpi-rgb-led-matrix/fonts/6x10.bdf")
 # Calculate the y positions to stack the text vertically
 line_height = 7
 padding = 0  # Space between lines
